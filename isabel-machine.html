@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    Insira um número<input type="text" id="ipt_valor"><br>
+    Qual a base desse número?
+    <select id="baseInicial">
+        <option value="0" selected>Selecione...</option>
+        <option value="2">Binário</option>
+        <option value="8">Octal</option>
+        <option value="10">Decimal</option>
+        <option value="16">Hexadecimal</option>
+    </select><br><br>
+    Para qual base você quer converter?
+    <select id="baseFinal">
+        <option value="0" selected>Selecione...</option>
+        <option value="2">Binário</option>
+        <option value="8">Octal</option>
+        <option value="10">Decimal</option>
+        <option value="16">Hexadecimal</option>
+    </select><br>
+    <button onclick="conversor()">Calcular</button><br><br>
+    <div id="divMsg"></div>
+</body>
+<script>
+    function conversor() {
+        var valor = ipt_valor.value;
+        var baseInicial = document.getElementById("baseInicial").value;
+        var baseFinal = document.getElementById("baseFinal").value;
+        if (baseInicial == "0" || baseFinal == "0") {
+            alert("Selecione as bases correspondentes");
+            return;
+        } else if (validacao(valor, baseInicial) == false) {
+            alert("Insira dados válidos!");
+            return;
+        } else {
+            var qtdLength = (valor.length) - 1;
+            var valorDecimal = 0;
+            if (baseInicial == "2") {
+                for (var i = qtdLength, j = 0; i > 0, j < valor.length; i--, j++) {
+                    valorDecimal += Number(valor[j]) * 2 ** i;
+                }
+                console.log(valorDecimal);
+            } else if (baseInicial == "8") {
+                for (var i = qtdLength, j = 0; i > 0, j < valor.length; i--, j++) {
+                    valorDecimal += Number(valor[j]) * 8 ** i;
+                    console.log(`valorAcumulado: ${valorDecimal} ValorAdicionado: ${Number(valor[j]) * 8 ** i} Valor de i: ${i} e valor de j: ${j}`);
+                }
+            } else if (baseInicial == "16") {
+                for (var i = qtdLength, j = 0; i > 0, j < valor.length; i--, j++) {
+                    if (valor[j] == "a" || valor[j] == "A") {
+                        valorDecimal += 10 * 16 ** i;
+                    } else if (valor[j] == "b" || valor[j] == "B") {
+                        valorDecimal += 11 * 16 ** i;
+                    } else if (valor[j] == "c" || valor[j] == "C") {
+                        valorDecimal += 12 * 16 ** i;
+                    } else if (valor[j] == "d" || valor[j] == "D") {
+                        valorDecimal += 13 * 16 ** i;
+                    } else if (valor[j] == "e" || valor[j] == "E") {
+                        valorDecimal += 14 * 16 ** i;
+                    } else if (valor[j] == "f" || valor[j] == "F") {
+                        valorDecimal += 15 * 16 ** i;
+                    } else {
+                        valorDecimal += Number(valor[j]) * 16 ** i;
+                    }
+                    console.log(`valorAcumulado: ${valorDecimal} ValorAdicionado: ${Number(valor[j]) * 8 ** i} Valor de i: ${i} e valor de j: ${j}`);
+                }
+            } else {
+                valorDecimal = Number(valor);
+            }
+            divMsg.innerHTML = `${divisao(valorDecimal, baseFinal)}`
+        }
+    }
+
+    function validacao(valor, baseInicial) {
+        if (baseInicial == "2") {
+            for (var i = 0; i < valor.length; i++) {
+                if (!(valor[i] == "0" || valor[i] == "1")) {
+                    return false;
+                }
+            }
+        } else if (baseInicial == "8") {
+            for (var i = 0; i < valor.length; i++) {
+                if (!(valor[i] == "0" || valor[i] == "1" || valor[i] == "2" ||
+                    valor[i] == "3" || valor[i] == "4" || valor[i] == "5" ||
+                    valor[i] == "6" || valor[i] == "7")) {
+                    return false;
+                }
+            }
+        } else if (baseInicial == "10") {
+            for (var i = 0; i < valor.length; i++) {
+                if (!(valor[i] == "0" || valor[i] == "1" || valor[i] == "2" ||
+                    valor[i] == "3" || valor[i] == "4" || valor[i] == "5" ||
+                    valor[i] == "6" || valor[i] == "7" || valor[i] == "8" ||
+                    valor[i] == "9")) {
+                    return false;
+                }
+            }
+        } else if (baseInicial == "16") {
+            for (var i = 0; i < valor.length; i++) {
+                if (!(valor[i] == "0" || valor[i] == "1" || valor[i] == "2" ||
+                    valor[i] == "3" || valor[i] == "4" || valor[i] == "5" ||
+                    valor[i] == "6" || valor[i] == "7" || valor[i] == "8" ||
+                    valor[i] == "9" || valor[i] == "A" || valor[i] == "B" ||
+                    valor[i] == "C" || valor[i] == "D" || valor[i] == "E" ||
+                    valor[i] == "F" || valor[i] == "a" || valor[i] == "b" ||
+                    valor[i] == "c" || valor[i] == "d" || valor[i] == "e" ||
+                    valor[i] == "f")) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    function divisao(valorDecimal, baseFinal) {
+        var resultado;
+        if (baseFinal == "2") {
+            if (valorDecimal == 0 ) {
+                return "";
+            } else {
+                resultado = Math.trunc(valorDecimal % 2);
+                valorDecimal = Math.trunc(valorDecimal/2);
+                return divisao(valorDecimal, baseFinal) + resultado;
+            }
+        }
+        if (baseFinal == "8") {
+            if (valorDecimal == 0 ) {
+                return "";
+            } else {
+                resultado = Math.trunc(valorDecimal % 8);
+                valorDecimal = Math.trunc(valorDecimal/8);
+                return divisao(valorDecimal, baseFinal) + resultado;
+            }
+        }
+        if (baseFinal == "10") {
+            if (valorDecimal == 0 ) {
+                return "";
+            } else {
+                resultado = Math.trunc(valorDecimal % 10);
+                valorDecimal = Math.trunc(valorDecimal/10);
+                return divisao(valorDecimal, baseFinal) + resultado;
+            }
+        }
+        if (baseFinal == "16") {
+            if (valorDecimal == 0 ) {
+                return "";
+            } else {
+                resultado = Math.trunc(valorDecimal % 16);
+                valorDecimal = Math.trunc(valorDecimal/16);
+                return divisao(valorDecimal, baseFinal) + resultado;
+            }
+        }
+    }
+</script>
+
+</html>
