@@ -5,28 +5,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="isabel-machine-style.css">
 </head>
 
 <body>
-    Insira um número<input type="text" id="ipt_valor"><br>
-    Qual a base desse número?
-    <select id="baseInicial">
-        <option value="0" selected>Selecione...</option>
-        <option value="2">Binário</option>
-        <option value="8">Octal</option>
-        <option value="10">Decimal</option>
-        <option value="16">Hexadecimal</option>
-    </select><br><br>
-    Para qual base você quer converter?
-    <select id="baseFinal">
-        <option value="0" selected>Selecione...</option>
-        <option value="2">Binário</option>
-        <option value="8">Octal</option>
-        <option value="10">Decimal</option>
-        <option value="16">Hexadecimal</option>
-    </select><br>
-    <button onclick="conversor()">Calcular</button><br><br>
-    <div id="divMsg"></div>
+    <div id="conversor">
+        <div class="div-titulo">
+            <h1>Conversão de Bases Numéricas</h1>
+            <p>
+                Com a nossa calculadora, converta rapidamente qualquer número para outra base numérica: basta digitar o
+                número, selecionar para qual base você deseja e clicar em Calcule. A conversão será feita de forma
+                automática
+            </p>
+        </div>
+        <div class="div-campos">
+            <form class="div-form">
+                <p>Insira um número</p>
+                <input type="text" id="ipt_valor">
+                <div class="div-form-select">
+                    <div id="div-form-select-inicial">
+                        <p>De:</p>
+                        <select id="baseInicial">
+                            <option value="0" selected>Selecione...</option>
+                            <option value="2">Binário</option>
+                            <option value="8">Octal</option>
+                            <option value="10">Decimal</option>
+                            <option value="16">Hexadecimal</option>
+                        </select>
+                    </div>
+                    <div class="div-form-select-final">
+                        <p>Para:</p>
+                        <select id="baseFinal">
+                            <option value="0" selected>Selecione...</option>
+                            <option value="2">Binário</option>
+                            <option value="8">Octal</option>
+                            <option value="10">Decimal</option>
+                            <option value="16">Hexadecimal</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+            <button onclick="conversor()">Calcular</button>
+            <div class="div-resultado">
+                <p>Resultado:</p>
+                <p id="resposta"></p>
+            </div>
+            <div class="div-passopasso">
+                <p>Resultado:</p>
+                <p>Conversão para decimal:</p>
+            </div>
+        </div>
+    </div>
 </body>
 <script>
     function conversor() {
@@ -74,7 +103,7 @@
             } else {
                 valorDecimal = Number(valor);
             }
-            divMsg.innerHTML = `${divisao(valorDecimal, baseFinal)}`
+            resposta.innerHTML = `${divisao(valorDecimal, baseFinal)}`
         }
     }
 
@@ -122,38 +151,38 @@
     function divisao(valorDecimal, baseFinal) {
         var resultado;
         if (baseFinal == "2") {
-            if (valorDecimal == 0 ) {
+            if (valorDecimal == 0) {
                 return "";
             } else {
-                resultado = Math.trunc(valorDecimal % 2);
-                valorDecimal = Math.trunc(valorDecimal/2);
+                resultado = Math.floor(valorDecimal % 2);
+                valorDecimal = Math.floor(valorDecimal / 2);
                 return divisao(valorDecimal, baseFinal) + resultado;
             }
         }
         if (baseFinal == "8") {
-            if (valorDecimal == 0 ) {
+            if (valorDecimal == 0) {
                 return "";
             } else {
-                resultado = Math.trunc(valorDecimal % 8);
-                valorDecimal = Math.trunc(valorDecimal/8);
+                resultado = Math.floor(valorDecimal % 8);
+                valorDecimal = Math.floor(valorDecimal / 8);
                 return divisao(valorDecimal, baseFinal) + resultado;
             }
         }
         if (baseFinal == "10") {
-            if (valorDecimal == 0 ) {
+            if (valorDecimal == 0) {
                 return "";
             } else {
-                resultado = Math.trunc(valorDecimal % 10);
-                valorDecimal = Math.trunc(valorDecimal/10);
+                resultado = Math.floor(valorDecimal % 10);
+                valorDecimal = Math.floor(valorDecimal / 10);
                 return divisao(valorDecimal, baseFinal) + resultado;
             }
         }
         if (baseFinal == "16") {
-            if (valorDecimal == 0 ) {
+            if (valorDecimal == 0) {
                 return "";
             } else {
-                resultado = Math.trunc(valorDecimal % 16);
-                valorDecimal = Math.trunc(valorDecimal/16);
+                resultado = Math.floor(valorDecimal % 16);
+                valorDecimal = Math.floor(valorDecimal / 16);
                 return divisao(valorDecimal, baseFinal) + resultado;
             }
         }
