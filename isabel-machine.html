@@ -24,8 +24,8 @@
                 <input type="text" id="ipt_valor">
                 <div class="div-form-select">
                     <div id="div-form-select-inicial">
-                        <p>De:</p>
-                        <select id="baseInicial">
+                        <p style="color: #dc97ff; margin-bottom: 10px;">De:</p>
+                        <select id="baseInicial" style="margin-bottom: 10px;">
                             <option value="0" selected>Selecione...</option>
                             <option value="2">Binário</option>
                             <option value="8">Octal</option>
@@ -34,8 +34,8 @@
                         </select>
                     </div>
                     <div class="div-form-select-final">
-                        <p>Para:</p>
-                        <select id="baseFinal">
+                        <p style="color: #dc97ff; margin-bottom: 10px;">Para:</p>
+                        <select id="baseFinal" style="margin-bottom: 10px;">
                             <option value="0" selected>Selecione...</option>
                             <option value="2">Binário</option>
                             <option value="8">Octal</option>
@@ -47,9 +47,14 @@
             </form>
             <button onclick="conversor()">Calcular</button>
             <div class="div-resultado">
-                <p>Resultado:</p>
+                <p style="color: #ba7dd8;"><b>Resultado:</b></p>
                 <p id="resposta"></p>
             </div>
+            <!-- <div class="div-passos">
+                <p style="color: #ba7dd8;"><b>Passo a passo:</b></p>
+                <p id="passosdecimal" class="passosdecimal"></p>
+                <p id="passosdivisao" class="passosdivisao"></p>
+            </div> -->
         </div>
     </div>
 </body>
@@ -58,6 +63,7 @@
         var valor = ipt_valor.value;
         var baseInicial = document.getElementById("baseInicial").value;
         var baseFinal = document.getElementById("baseFinal").value;
+
         if (baseInicial == "0" || baseFinal == "0") {
             alert("Selecione as bases correspondentes");
             return;
@@ -68,33 +74,58 @@
             var qtdLength = (valor.length) - 1;
             var valorDecimal = 0;
             if (baseInicial == "2") {
+                let basebin = 0;
+                // passosdecimal.innerHTML = `<b style="color: #ba7dd8;">Para decimal:</b><br>`;
+
                 for (var i = qtdLength, j = 0; i > 0, j < valor.length; i--, j++) {
                     valorDecimal += Number(valor[j]) * 2 ** i;
+                    basebin = Number(valor[j]) * 2 ** i;
+                    // passosdecimal.innerHTML += `${valor[j]} x 2^${i} = ${basebin}<br>`
                 }
                 console.log(valorDecimal);
             } else if (baseInicial == "8") {
+                let baseoctal = 0;
+                // passosdecimal.innerHTML = `<b style="color: #ba7dd8;">Para decimal:</b><br>`;
+
                 for (var i = qtdLength, j = 0; i > 0, j < valor.length; i--, j++) {
                     valorDecimal += Number(valor[j]) * 8 ** i;
-                    console.log(`valorAcumulado: ${valorDecimal} ValorAdicionado: ${Number(valor[j]) * 8 ** i} Valor de i: ${i} e valor de j: ${j}`);
+                    baseoctal = Number(valor[j]) * 8 ** i;
+                    // passosdecimal.innerHTML += `${valor[j]} x 8^${i} = ${baseoctal}<br>`
                 }
             } else if (baseInicial == "16") {
+                let basehexa = 0;
+                // passosdecimal.innerHTML = `<b style="color: #ba7dd8;">Para decimal:</b><br>`;
+
                 for (var i = qtdLength, j = 0; i > 0, j < valor.length; i--, j++) {
                     if (valor[j] == "a" || valor[j] == "A") {
                         valorDecimal += 10 * 16 ** i;
+                        baseoctal = 10 * 16 ** i;
+                        // passosdecimal.innerHTML += `10 x 16^${i} = ${baseoctal}<br>`
                     } else if (valor[j] == "b" || valor[j] == "B") {
                         valorDecimal += 11 * 16 ** i;
+                        baseoctal = 11 * 16 ** i;
+                        // passosdecimal.innerHTML += `11 x 16^${i} = ${baseoctal}<br>`
                     } else if (valor[j] == "c" || valor[j] == "C") {
                         valorDecimal += 12 * 16 ** i;
+                        baseoctal = 12 * 16 ** i;
+                        // passosdecimal.innerHTML += `12 x 16^${i} = ${baseoctal}<br>`
                     } else if (valor[j] == "d" || valor[j] == "D") {
                         valorDecimal += 13 * 16 ** i;
+                        baseoctal = 13 * 16 ** i;
+                        // passosdecimal.innerHTML += `13 x 16^${i} = ${baseoctal}<br>`
                     } else if (valor[j] == "e" || valor[j] == "E") {
                         valorDecimal += 14 * 16 ** i;
+                        baseoctal = 14 * 16 ** i;
+                        // passosdecimal.innerHTML += `14 x 16^${i} = ${baseoctal}<br>`
                     } else if (valor[j] == "f" || valor[j] == "F") {
                         valorDecimal += 15 * 16 ** i;
+                        baseoctal = 15 * 16 ** i;
+                        // passosdecimal.innerHTML += `15 x 16^${i} = ${baseoctal}<br>`
                     } else {
                         valorDecimal += Number(valor[j]) * 16 ** i;
+                        baseoctal = Number(valor[j]) * 16 ** i;
+                        // passosdecimal.innerHTML += `${valor[j]} x 16^${i} = ${baseoctal}<br>`
                     }
-                    console.log(`valorAcumulado: ${valorDecimal} ValorAdicionado: ${Number(valor[j]) * 8 ** i} Valor de i: ${i} e valor de j: ${j}`);
                 }
             } else {
                 valorDecimal = Number(valor);
@@ -183,6 +214,7 @@
             }
         }
     }
+
 </script>
 
 </html>
